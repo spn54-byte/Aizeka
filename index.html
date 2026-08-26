@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berat AI</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111827;
+  color: white;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 25px;
+}
+
+h1 {
+  text-align: center;
+  color: #60a5fa;
+}
+
+#chat {
+  height: 60vh;
+  overflow-y: auto;
+  background: #1f2937;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.message {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+}
+
+.user {
+  background: #2563eb;
+  text-align: right;
+}
+
+.ai {
+  background: #374151;
+}
+
+.input-area {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+input {
+  flex: 1;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+button {
+  padding: 15px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🤖 Berat AI</h1>
+
+<div id="chat">
+  <div class="message ai">
+    Merhaba! Ben Berat AI. Bana bir şey sor 😎
+  </div>
+</div>
+
+<div class="input-area">
+  <input id="message" placeholder="Bir şey yaz..." />
+  <button onclick="sendMessage()">Gönder</button>
+</div>
+
+</div>
+
+<script>
+function sendMessage() {
+
+  const input = document.getElementById("message");
+  const chat = document.getElementById("chat");
+
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  chat.innerHTML += `
+    <div class="message user">${text}</div>
+  `;
+
+  input.value = "";
+
+  setTimeout(() => {
+
+    chat.innerHTML += `
+      <div class="message ai">
+        Mesajını aldım 😎 Şimdilik demo modundayım. Bir sonraki adımda gerçek yapay zekayı bağlayacağız.
+      </div>
+    `;
+
+    chat.scrollTop = chat.scrollHeight;
+
+  }, 500);
+}
+</script>
+
+</body>
+</html>
