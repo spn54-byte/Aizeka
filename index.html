@@ -6,119 +6,369 @@
 <title>Berat AI</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #111827;
-  color: white;
+*{
+  box-sizing:border-box;
 }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 25px;
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:#0b0f19;
+  color:white;
 }
 
-h1 {
-  text-align: center;
-  color: #60a5fa;
+.app{
+  max-width:700px;
+  margin:auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
-#chat {
-  height: 60vh;
-  overflow-y: auto;
-  background: #1f2937;
-  border-radius: 15px;
-  padding: 15px;
+header{
+  padding:18px 20px;
+  border-bottom:1px solid #202737;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#101522;
+  position:sticky;
+  top:0;
+  z-index:5;
 }
 
-.message {
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 12px;
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:21px;
+  font-weight:700;
 }
 
-.user {
-  background: #2563eb;
-  text-align: right;
+.logoIcon{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#6d5dfc,#9c6cff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
 }
 
-.ai {
-  background: #374151;
+.status{
+  font-size:12px;
+  color:#70e090;
 }
 
-.input-area {
-  display: flex;
-  gap: 8px;
-  margin-top: 15px;
+#chat{
+  flex:1;
+  padding:25px 16px 120px;
 }
 
-input {
-  flex: 1;
-  padding: 15px;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
+.welcome{
+  text-align:center;
+  padding:55px 20px 30px;
 }
 
-button {
-  padding: 15px 20px;
-  border: none;
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
-  font-weight: bold;
+.welcomeIcon{
+  width:70px;
+  height:70px;
+  margin:auto;
+  border-radius:22px;
+  background:linear-gradient(135deg,#6d5dfc,#a56cff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  font-weight:bold;
+  box-shadow:0 15px 40px #0006;
+}
+
+.welcome h1{
+  font-size:32px;
+  margin:20px 0 10px;
+}
+
+.welcome p{
+  color:#9299a9;
+  line-height:1.6;
+}
+
+.message{
+  display:flex;
+  margin:18px 0;
+}
+
+.message.user{
+  justify-content:flex-end;
+}
+
+.bubble{
+  max-width:82%;
+  padding:13px 16px;
+  border-radius:18px;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
+.user .bubble{
+  background:#6658e8;
+  border-bottom-right-radius:5px;
+}
+
+.ai .bubble{
+  background:#171d2a;
+  border:1px solid #252d3d;
+  border-bottom-left-radius:5px;
+}
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:12px 14px 18px;
+  background:linear-gradient(transparent,#0b0f19 25%);
+}
+
+.inputBox{
+  max-width:670px;
+  margin:auto;
+  background:#151b28;
+  border:1px solid #30394b;
+  border-radius:20px;
+  padding:8px;
+  display:flex;
+  gap:8px;
+  box-shadow:0 10px 35px #0008;
+}
+
+textarea{
+  flex:1;
+  resize:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  font-size:16px;
+  padding:10px;
+  min-height:44px;
+  max-height:120px;
+}
+
+textarea::placeholder{
+  color:#737b8c;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.send{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  background:#6b5cf2;
+  color:white;
+  font-size:20px;
+}
+
+.send:active{
+  transform:scale(.95);
+}
+
+.typing{
+  display:none;
+  color:#9299a9;
+  font-size:14px;
+  margin:10px 5px;
+}
+
+.clear{
+  background:#202737;
+  color:#c5cada;
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+@media(max-width:500px){
+  .welcome h1{
+    font-size:28px;
+  }
+
+  .bubble{
+    max-width:88%;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<h1>🤖 Berat AI</h1>
-
-<div id="chat">
-  <div class="message ai">
-    Merhaba! Ben Berat AI. Bana bir şey sor 😎
+<header>
+  <div class="logo">
+    <div class="logoIcon">B</div>
+    <span>Berat AI</span>
   </div>
+
+  <div>
+    <span class="status">● Online</span>
+    <button class="clear" onclick="clearChat()">Temizle</button>
+  </div>
+</header>
+
+<main id="chat">
+
+  <div class="welcome" id="welcome">
+    <div class="welcomeIcon">B</div>
+    <h1>Berat AI</h1>
+    <p>
+      Selam reis 👋<br>
+      Sana nasıl yardımcı olabilirim?
+    </p>
+  </div>
+
+</main>
+
+<div class="typing" id="typing">
+  Berat AI yazıyor...
 </div>
 
-<div class="input-area">
-  <input id="message" placeholder="Bir şey yaz..." />
-  <button onclick="sendMessage()">Gönder</button>
+<div class="bottom">
+  <div class="inputBox">
+
+    <textarea
+      id="input"
+      placeholder="Berat AI'ya bir şey sor..."
+      rows="1"
+      onkeydown="handleKey(event)"
+    ></textarea>
+
+    <button class="send" onclick="sendMessage()">➤</button>
+
+  </div>
 </div>
 
 </div>
 
 <script>
-function sendMessage() {
 
-  const input = document.getElementById("message");
-  const chat = document.getElementById("chat");
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+const typing = document.getElementById("typing");
+
+function addMessage(text,type){
+
+  const message = document.createElement("div");
+  message.className = "message " + type;
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
+
+  message.appendChild(bubble);
+  chat.appendChild(message);
+
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:"smooth"
+  });
+}
+
+function getAnswer(text){
+
+  const t = text.toLowerCase();
+
+  if(t.includes("merhaba") || t.includes("selam")){
+    return "Selam reis 😎 Ben Berat AI. Buradayım, ne yapıyoruz?";
+  }
+
+  if(t.includes("nasılsın")){
+    return "İyiyim reis 😎 Sen nasılsın?";
+  }
+
+  if(t.includes("adın ne")){
+    return "Ben Berat AI 🤖";
+  }
+
+  if(t.includes("kim yapt")){
+    return "Beni Berat yaptı reis 😎🔥";
+  }
+
+  if(t.includes("youtube")){
+    return "YouTube konusunda yardımcı olabilirim. Kanal, video fikri, başlık, açıklama veya küçük resim konusunda çalışabiliriz.";
+  }
+
+  if(t.includes("araba")){
+    return "Araba konusunda da yardımcı olurum reis. Modeli, yılı ve motoru yaz yeter.";
+  }
+
+  if(t.includes("oyun")){
+    return "Oyun geliştirmek istiyorsan telefondan başlayabileceğimiz basit bir proje bile yapabiliriz 🎮";
+  }
+
+  if(t.includes("fotoğraf")){
+    return "Fotoğraf düzenleme fikrini anlat, nasıl bir sonuç istediğini birlikte planlayalım 📸";
+  }
+
+  return "Bunu anladım reis 👍 Şimdilik benim demo sürümüm çalışıyor. Bir sonraki aşamada gerçek yapay zekâ bağlantısını ekleyip çok daha güçlü hale getireceğiz. 🤖🔥";
+}
+
+function sendMessage(){
 
   const text = input.value.trim();
 
-  if (!text) return;
+  if(!text) return;
 
-  chat.innerHTML += `
-    <div class="message user">${text}</div>
+  document.getElementById("welcome").style.display="none";
+
+  addMessage(text,"user");
+
+  input.value="";
+
+  typing.style.display="block";
+
+  setTimeout(()=>{
+
+    typing.style.display="none";
+
+    const answer = getAnswer(text);
+
+    addMessage(answer,"ai");
+
+  },700);
+}
+
+function handleKey(event){
+
+  if(event.key==="Enter" && !event.shiftKey){
+
+    event.preventDefault();
+    sendMessage();
+
+  }
+}
+
+function clearChat(){
+
+  chat.innerHTML = `
+    <div class="welcome" id="welcome">
+      <div class="welcomeIcon">B</div>
+      <h1>Berat AI</h1>
+      <p>
+        Selam reis 👋<br>
+        Sana nasıl yardımcı olabilirim?
+      </p>
+    </div>
   `;
 
-  input.value = "";
-
-  setTimeout(() => {
-
-    chat.innerHTML += `
-      <div class="message ai">
-        Mesajını aldım 😎 Şimdilik demo modundayım. Bir sonraki adımda gerçek yapay zekayı bağlayacağız.
-      </div>
-    `;
-
-    chat.scrollTop = chat.scrollHeight;
-
-  }, 500);
 }
+
 </script>
 
 </body>
