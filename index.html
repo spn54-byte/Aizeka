@@ -8,146 +8,197 @@
 <style>
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:#0b0f19;
-  color:white;
+  background:#090c15;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-.container{
-  max-width:700px;
-  margin:auto;
+.app{
+  width:100%;
+  max-width:800px;
   min-height:100vh;
-  padding:20px;
+  margin:auto;
   display:flex;
   flex-direction:column;
 }
 
 header{
   text-align:center;
-  padding:25px 0;
+  padding:38px 20px 20px;
 }
 
 .logo{
-  width:60px;
-  height:60px;
+  width:64px;
+  height:64px;
   margin:auto;
   border-radius:50%;
-  background:linear-gradient(135deg,#7c5cff,#00c6ff);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
-  font-weight:bold;
+  font-size:30px;
+  font-weight:800;
+  background:linear-gradient(135deg,#4d5cff,#733cff);
+  box-shadow:0 0 35px rgba(78,88,255,.35);
 }
 
 h1{
-  margin:12px 0 5px;
-  font-size:28px;
+  margin:14px 0 5px;
+  font-size:34px;
 }
 
 .subtitle{
-  color:#9ca3af;
+  color:#9299aa;
+  font-size:18px;
 }
 
-#chat{
+.chat{
   flex:1;
-  overflow-y:auto;
-  padding:15px 0;
+  padding:15px 16px 150px;
 }
 
 .message{
-  padding:14px 16px;
-  margin:10px 0;
-  border-radius:18px;
-  max-width:85%;
-  line-height:1.5;
+  max-width:86%;
+  padding:17px 19px;
+  margin:13px 0;
+  border-radius:24px;
+  font-size:17px;
+  line-height:1.55;
   white-space:pre-wrap;
 }
 
-.user{
-  background:#3157d5;
-  margin-left:auto;
-}
-
 .ai{
-  background:#171d2b;
-  border:1px solid #293144;
+  background:#171c2a;
+  border:1px solid #293248;
   margin-right:auto;
 }
 
-.preview{
-  max-width:100%;
-  max-height:300px;
-  border-radius:15px;
-  margin-top:10px;
+.user{
+  background:linear-gradient(135deg,#4056d8,#5940e8);
+  margin-left:auto;
+  border-bottom-right-radius:7px;
 }
 
-.input-area{
-  background:#151b28;
-  border:1px solid #30384c;
-  border-radius:22px;
-  padding:10px;
+.ai{
+  border-bottom-left-radius:7px;
+}
+
+.composer{
+  position:fixed;
+  left:50%;
+  bottom:15px;
+  transform:translateX(-50%);
+  width:calc(100% - 24px);
+  max-width:776px;
+  background:rgba(20,24,37,.96);
+  border:1px solid #30384d;
+  border-radius:27px;
+  padding:12px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 10px 40px rgba(0,0,0,.35);
+}
+
+.row{
+  display:flex;
+  align-items:flex-end;
+  gap:9px;
 }
 
 textarea{
-  width:100%;
-  min-height:60px;
+  flex:1;
   resize:none;
   border:0;
   outline:0;
   background:transparent;
   color:white;
-  font-size:16px;
-  padding:10px;
+  font-size:17px;
+  padding:12px 8px;
+  min-height:48px;
+  max-height:130px;
+  font-family:inherit;
 }
 
-.buttons{
-  display:flex;
-  align-items:center;
-  gap:10px;
+textarea::placeholder{
+  color:#747c90;
 }
 
-button,
-.file-label{
+button{
   border:0;
-  border-radius:14px;
-  padding:12px 16px;
-  color:white;
-  background:#252d3d;
-  font-size:15px;
   cursor:pointer;
+  color:white;
+  font-family:inherit;
 }
 
-button.send{
-  margin-left:auto;
-  background:#5b4df5;
+.photo{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  background:#272d3e;
+  font-size:22px;
+}
+
+.send{
+  width:100px;
+  height:48px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#465be0,#6044ec);
+  font-size:16px;
+  font-weight:700;
+}
+
+.send:active,
+.photo:active{
+  transform:scale(.96);
+}
+
+.preview{
+  display:none;
+  margin:5px 5px 12px;
+  position:relative;
+}
+
+.preview img{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:15px;
+  border:1px solid #3a435a;
+}
+
+.remove{
+  position:absolute;
+  top:-7px;
+  left:78px;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:#e5455b;
   font-weight:bold;
 }
 
-.file-label{
-  display:inline-block;
-}
-
-input[type=file]{
+.typing{
   display:none;
+  color:#858da0;
+  font-size:14px;
+  padding:0 20px 10px;
 }
 
-.status{
+.footer{
   text-align:center;
-  color:#7f8aa3;
+  color:#4e5669;
   font-size:12px;
-  margin-top:10px;
+  padding:0 0 120px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
 <header>
   <div class="logo">B</div>
@@ -155,29 +206,41 @@ input[type=file]{
   <div class="subtitle">Senin yapay zekâ asistanın</div>
 </header>
 
-<div id="chat">
+<main class="chat" id="chat">
 
   <div class="message ai">
-    👋 Selam! Ben Berat AI.<br><br>
-    Bana mesaj yazabilir veya fotoğraf yükleyebilirsin.
+👋 Selam! Ben Berat AI.
+
+Bana mesaj yazabilir veya fotoğraf gönderebilirsin.
+
+Hazırım reis 😎
   </div>
 
+</main>
+
+<div class="typing" id="typing">
+  Berat AI yazıyor...
 </div>
 
-<div class="input-area">
+<div class="composer">
 
-  <textarea id="message"
-    placeholder="Berat AI'ya bir şey sor..."></textarea>
+  <div class="preview" id="preview">
+    <img id="previewImage">
+    <button class="remove" onclick="removePhoto()">×</button>
+  </div>
 
-  <div class="buttons">
+  <div class="row">
 
-    <label class="file-label">
-      📷 Fotoğraf
-      <input
-        type="file"
-        id="photo"
-        accept="image/*">
-    </label>
+    <button class="photo" onclick="document.getElementById('photoInput').click()">
+      📷
+    </button>
+
+    <textarea
+      id="message"
+      placeholder="Berat AI'ya bir şey sor..."
+      rows="1"
+      oninput="autoResize(this)"
+    ></textarea>
 
     <button class="send" onclick="sendMessage()">
       Gönder ➤
@@ -187,91 +250,158 @@ input[type=file]{
 
 </div>
 
-<div class="status">
-  Berat AI • Beta
-</div>
+<input
+  id="photoInput"
+  type="file"
+  accept="image/*"
+  hidden
+  onchange="selectPhoto(event)"
+>
 
 </div>
 
 <script>
 
-let selectedImage = null;
+let selectedPhoto = null;
 
-const photoInput = document.getElementById("photo");
-const messageInput = document.getElementById("message");
 const chat = document.getElementById("chat");
+const message = document.getElementById("message");
+const typing = document.getElementById("typing");
 
-photoInput.addEventListener("change", function(){
+function addMessage(text,type){
 
-  const file = this.files[0];
+  const div = document.createElement("div");
+
+  div.className = "message " + type;
+  div.textContent = text;
+
+  chat.appendChild(div);
+
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:"smooth"
+  });
+}
+
+function sendMessage(){
+
+  const text = message.value.trim();
+
+  if(!text && !selectedPhoto){
+    return;
+  }
+
+  if(selectedPhoto){
+
+    const photoMessage = document.createElement("div");
+    photoMessage.className = "message user";
+
+    const img = document.createElement("img");
+    img.src = selectedPhoto;
+    img.style.width = "100%";
+    img.style.maxWidth = "260px";
+    img.style.borderRadius = "16px";
+
+    photoMessage.appendChild(img);
+
+    if(text){
+      const caption = document.createElement("div");
+      caption.style.marginTop = "10px";
+      caption.textContent = text;
+      photoMessage.appendChild(caption);
+    }
+
+    chat.appendChild(photoMessage);
+
+    removePhoto();
+
+  }else{
+
+    addMessage(text,"user");
+
+  }
+
+  message.value = "";
+  message.style.height = "auto";
+
+  showTyping();
+
+  setTimeout(function(){
+
+    hideTyping();
+
+    let answer =
+      "Mesajını aldım reis. 🤖\n\n" +
+      "Gerçek yapay zekâ bağlantısını birazdan ekleyeceğiz. " +
+      "Şu anda arayüz ve mesaj sistemi çalışıyor.";
+
+    if(text && text.toLowerCase().includes("merhaba")){
+      answer = "Merhaba reis 😎 Nasılsın?";
+    }
+
+    if(text && text.toLowerCase().includes("nasılsın")){
+      answer = "İyiyim reis 😄 Sen nasılsın?";
+    }
+
+    addMessage(answer,"ai");
+
+  },700);
+
+}
+
+function showTyping(){
+  typing.style.display="block";
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:"smooth"
+  });
+}
+
+function hideTyping(){
+  typing.style.display="none";
+}
+
+function autoResize(el){
+
+  el.style.height="auto";
+  el.style.height=Math.min(el.scrollHeight,130)+"px";
+
+}
+
+function selectPhoto(event){
+
+  const file = event.target.files[0];
 
   if(!file) return;
 
-  selectedImage = file;
-
   const reader = new FileReader();
 
-  reader.onload = function(e){
+  reader.onload=function(e){
 
-    const msg = document.createElement("div");
-    msg.className = "message user";
+    selectedPhoto=e.target.result;
 
-    msg.innerHTML = `
-      📷 Fotoğraf seçildi
-      <br>
-      <img class="preview" src="${e.target.result}">
-    `;
-
-    chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
+    document.getElementById("previewImage").src=selectedPhoto;
+    document.getElementById("preview").style.display="block";
 
   };
 
   reader.readAsDataURL(file);
 
-});
+}
 
-function sendMessage(){
+function removePhoto(){
 
-  const text = messageInput.value.trim();
+  selectedPhoto=null;
 
-  if(!text && !selectedImage){
-    return;
-  }
-
-  if(text){
-
-    const userMsg = document.createElement("div");
-    userMsg.className = "message user";
-    userMsg.textContent = text;
-
-    chat.appendChild(userMsg);
-
-    messageInput.value = "";
-
-    chat.scrollTop = chat.scrollHeight;
-
-    setTimeout(() => {
-
-      const aiMsg = document.createElement("div");
-      aiMsg.className = "message ai";
-
-      aiMsg.textContent =
-        "Mesajını aldım. 🤖 Gerçek yapay zekâ bağlantısını eklediğimizde sana burada cevap vereceğim.";
-
-      chat.appendChild(aiMsg);
-
-      chat.scrollTop = chat.scrollHeight;
-
-    },700);
-
-  }
+  document.getElementById("preview").style.display="none";
+  document.getElementById("previewImage").src="";
+  document.getElementById("photoInput").value="";
 
 }
 
-messageInput.addEventListener("keydown", function(e){
+message.addEventListener("keydown",function(e){
 
-  if(e.key === "Enter" && !e.shiftKey){
+  if(e.key==="Enter" && !e.shiftKey){
 
     e.preventDefault();
     sendMessage();
