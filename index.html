@@ -17,135 +17,85 @@ body{
   color:white;
 }
 
-.app{
+.container{
   max-width:700px;
   margin:auto;
   min-height:100vh;
+  padding:20px;
   display:flex;
   flex-direction:column;
 }
 
 header{
-  padding:18px 20px;
-  border-bottom:1px solid #202737;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#101522;
-  position:sticky;
-  top:0;
-  z-index:5;
+  text-align:center;
+  padding:25px 0;
 }
 
 .logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:21px;
-  font-weight:700;
-}
-
-.logoIcon{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#6d5dfc,#9c6cff);
+  width:60px;
+  height:60px;
+  margin:auto;
+  border-radius:50%;
+  background:linear-gradient(135deg,#7c5cff,#00c6ff);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:800;
+  font-size:28px;
+  font-weight:bold;
 }
 
-.status{
-  font-size:12px;
-  color:#70e090;
+h1{
+  margin:12px 0 5px;
+  font-size:28px;
+}
+
+.subtitle{
+  color:#9ca3af;
 }
 
 #chat{
   flex:1;
-  padding:25px 16px 120px;
-}
-
-.welcome{
-  text-align:center;
-  padding:55px 20px 30px;
-}
-
-.welcomeIcon{
-  width:70px;
-  height:70px;
-  margin:auto;
-  border-radius:22px;
-  background:linear-gradient(135deg,#6d5dfc,#a56cff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  font-weight:bold;
-  box-shadow:0 15px 40px #0006;
-}
-
-.welcome h1{
-  font-size:32px;
-  margin:20px 0 10px;
-}
-
-.welcome p{
-  color:#9299a9;
-  line-height:1.6;
+  overflow-y:auto;
+  padding:15px 0;
 }
 
 .message{
-  display:flex;
-  margin:18px 0;
-}
-
-.message.user{
-  justify-content:flex-end;
-}
-
-.bubble{
-  max-width:82%;
-  padding:13px 16px;
+  padding:14px 16px;
+  margin:10px 0;
   border-radius:18px;
+  max-width:85%;
   line-height:1.5;
   white-space:pre-wrap;
 }
 
-.user .bubble{
-  background:#6658e8;
-  border-bottom-right-radius:5px;
+.user{
+  background:#3157d5;
+  margin-left:auto;
 }
 
-.ai .bubble{
-  background:#171d2a;
-  border:1px solid #252d3d;
-  border-bottom-left-radius:5px;
+.ai{
+  background:#171d2b;
+  border:1px solid #293144;
+  margin-right:auto;
 }
 
-.bottom{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  padding:12px 14px 18px;
-  background:linear-gradient(transparent,#0b0f19 25%);
+.preview{
+  max-width:100%;
+  max-height:300px;
+  border-radius:15px;
+  margin-top:10px;
 }
 
-.inputBox{
-  max-width:670px;
-  margin:auto;
+.input-area{
   background:#151b28;
-  border:1px solid #30394b;
-  border-radius:20px;
-  padding:8px;
-  display:flex;
-  gap:8px;
-  box-shadow:0 10px 35px #0008;
+  border:1px solid #30384c;
+  border-radius:22px;
+  padding:10px;
 }
 
 textarea{
-  flex:1;
+  width:100%;
+  min-height:60px;
   resize:none;
   border:0;
   outline:0;
@@ -153,221 +103,182 @@ textarea{
   color:white;
   font-size:16px;
   padding:10px;
-  min-height:44px;
-  max-height:120px;
 }
 
-textarea::placeholder{
-  color:#737b8c;
+.buttons{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-button{
+button,
+.file-label{
   border:0;
+  border-radius:14px;
+  padding:12px 16px;
+  color:white;
+  background:#252d3d;
+  font-size:15px;
   cursor:pointer;
 }
 
-.send{
-  width:48px;
-  height:48px;
-  border-radius:15px;
-  background:#6b5cf2;
-  color:white;
-  font-size:20px;
+button.send{
+  margin-left:auto;
+  background:#5b4df5;
+  font-weight:bold;
 }
 
-.send:active{
-  transform:scale(.95);
+.file-label{
+  display:inline-block;
 }
 
-.typing{
+input[type=file]{
   display:none;
-  color:#9299a9;
-  font-size:14px;
-  margin:10px 5px;
 }
 
-.clear{
-  background:#202737;
-  color:#c5cada;
-  padding:8px 12px;
-  border-radius:10px;
+.status{
+  text-align:center;
+  color:#7f8aa3;
   font-size:12px;
-}
-
-@media(max-width:500px){
-  .welcome h1{
-    font-size:28px;
-  }
-
-  .bubble{
-    max-width:88%;
-  }
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
 <header>
-  <div class="logo">
-    <div class="logoIcon">B</div>
-    <span>Berat AI</span>
-  </div>
-
-  <div>
-    <span class="status">● Online</span>
-    <button class="clear" onclick="clearChat()">Temizle</button>
-  </div>
+  <div class="logo">B</div>
+  <h1>Berat AI</h1>
+  <div class="subtitle">Senin yapay zekâ asistanın</div>
 </header>
 
-<main id="chat">
+<div id="chat">
 
-  <div class="welcome" id="welcome">
-    <div class="welcomeIcon">B</div>
-    <h1>Berat AI</h1>
-    <p>
-      Selam reis 👋<br>
-      Sana nasıl yardımcı olabilirim?
-    </p>
+  <div class="message ai">
+    👋 Selam! Ben Berat AI.<br><br>
+    Bana mesaj yazabilir veya fotoğraf yükleyebilirsin.
   </div>
 
-</main>
-
-<div class="typing" id="typing">
-  Berat AI yazıyor...
 </div>
 
-<div class="bottom">
-  <div class="inputBox">
+<div class="input-area">
 
-    <textarea
-      id="input"
-      placeholder="Berat AI'ya bir şey sor..."
-      rows="1"
-      onkeydown="handleKey(event)"
-    ></textarea>
+  <textarea id="message"
+    placeholder="Berat AI'ya bir şey sor..."></textarea>
 
-    <button class="send" onclick="sendMessage()">➤</button>
+  <div class="buttons">
+
+    <label class="file-label">
+      📷 Fotoğraf
+      <input
+        type="file"
+        id="photo"
+        accept="image/*">
+    </label>
+
+    <button class="send" onclick="sendMessage()">
+      Gönder ➤
+    </button>
 
   </div>
+
+</div>
+
+<div class="status">
+  Berat AI • Beta
 </div>
 
 </div>
 
 <script>
 
+let selectedImage = null;
+
+const photoInput = document.getElementById("photo");
+const messageInput = document.getElementById("message");
 const chat = document.getElementById("chat");
-const input = document.getElementById("input");
-const typing = document.getElementById("typing");
 
-function addMessage(text,type){
+photoInput.addEventListener("change", function(){
 
-  const message = document.createElement("div");
-  message.className = "message " + type;
+  const file = this.files[0];
 
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.textContent = text;
+  if(!file) return;
 
-  message.appendChild(bubble);
-  chat.appendChild(message);
+  selectedImage = file;
 
-  window.scrollTo({
-    top:document.body.scrollHeight,
-    behavior:"smooth"
-  });
-}
+  const reader = new FileReader();
 
-function getAnswer(text){
+  reader.onload = function(e){
 
-  const t = text.toLowerCase();
+    const msg = document.createElement("div");
+    msg.className = "message user";
 
-  if(t.includes("merhaba") || t.includes("selam")){
-    return "Selam reis 😎 Ben Berat AI. Buradayım, ne yapıyoruz?";
-  }
+    msg.innerHTML = `
+      📷 Fotoğraf seçildi
+      <br>
+      <img class="preview" src="${e.target.result}">
+    `;
 
-  if(t.includes("nasılsın")){
-    return "İyiyim reis 😎 Sen nasılsın?";
-  }
+    chat.appendChild(msg);
+    chat.scrollTop = chat.scrollHeight;
 
-  if(t.includes("adın ne")){
-    return "Ben Berat AI 🤖";
-  }
+  };
 
-  if(t.includes("kim yapt")){
-    return "Beni Berat yaptı reis 😎🔥";
-  }
+  reader.readAsDataURL(file);
 
-  if(t.includes("youtube")){
-    return "YouTube konusunda yardımcı olabilirim. Kanal, video fikri, başlık, açıklama veya küçük resim konusunda çalışabiliriz.";
-  }
-
-  if(t.includes("araba")){
-    return "Araba konusunda da yardımcı olurum reis. Modeli, yılı ve motoru yaz yeter.";
-  }
-
-  if(t.includes("oyun")){
-    return "Oyun geliştirmek istiyorsan telefondan başlayabileceğimiz basit bir proje bile yapabiliriz 🎮";
-  }
-
-  if(t.includes("fotoğraf")){
-    return "Fotoğraf düzenleme fikrini anlat, nasıl bir sonuç istediğini birlikte planlayalım 📸";
-  }
-
-  return "Bunu anladım reis 👍 Şimdilik benim demo sürümüm çalışıyor. Bir sonraki aşamada gerçek yapay zekâ bağlantısını ekleyip çok daha güçlü hale getireceğiz. 🤖🔥";
-}
+});
 
 function sendMessage(){
 
-  const text = input.value.trim();
+  const text = messageInput.value.trim();
 
-  if(!text) return;
+  if(!text && !selectedImage){
+    return;
+  }
 
-  document.getElementById("welcome").style.display="none";
+  if(text){
 
-  addMessage(text,"user");
+    const userMsg = document.createElement("div");
+    userMsg.className = "message user";
+    userMsg.textContent = text;
 
-  input.value="";
+    chat.appendChild(userMsg);
 
-  typing.style.display="block";
+    messageInput.value = "";
 
-  setTimeout(()=>{
+    chat.scrollTop = chat.scrollHeight;
 
-    typing.style.display="none";
+    setTimeout(() => {
 
-    const answer = getAnswer(text);
+      const aiMsg = document.createElement("div");
+      aiMsg.className = "message ai";
 
-    addMessage(answer,"ai");
+      aiMsg.textContent =
+        "Mesajını aldım. 🤖 Gerçek yapay zekâ bağlantısını eklediğimizde sana burada cevap vereceğim.";
 
-  },700);
+      chat.appendChild(aiMsg);
+
+      chat.scrollTop = chat.scrollHeight;
+
+    },700);
+
+  }
+
 }
 
-function handleKey(event){
+messageInput.addEventListener("keydown", function(e){
 
-  if(event.key==="Enter" && !event.shiftKey){
+  if(e.key === "Enter" && !e.shiftKey){
 
-    event.preventDefault();
+    e.preventDefault();
     sendMessage();
 
   }
-}
 
-function clearChat(){
-
-  chat.innerHTML = `
-    <div class="welcome" id="welcome">
-      <div class="welcomeIcon">B</div>
-      <h1>Berat AI</h1>
-      <p>
-        Selam reis 👋<br>
-        Sana nasıl yardımcı olabilirim?
-      </p>
-    </div>
-  `;
-
-}
+});
 
 </script>
 
